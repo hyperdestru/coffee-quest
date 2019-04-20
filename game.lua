@@ -46,18 +46,19 @@ function Game.Load()
     local nb_lines = Game.Map.tilesheet:getHeight() / Game.Map.TILE_HEIGHT
     local l,c
     local id = 1
+
     for l = 1, nb_lines do
-      for c = 1, nb_cols do
-        Game.Map.TileTextures[id] = love.graphics.newQuad(
-          (c - 1) * Game.Map.TILE_WIDTH, 
-          (l - 1) * Game.Map.TILE_HEIGHT, 
-          Game.Map.TILE_WIDTH, 
-          Game.Map.TILE_HEIGHT, 
-          Game.Map.tilesheet:getWidth(),
-          Game.Map.tilesheet:getHeight()
-        )
+    	for c = 1, nb_cols do
+        	Game.Map.TileTextures[id] = love.graphics.newQuad(
+          	(c - 1) * Game.Map.TILE_WIDTH, 
+          	(l - 1) * Game.Map.TILE_HEIGHT, 
+          	Game.Map.TILE_WIDTH, 
+          	Game.Map.TILE_HEIGHT, 
+          	Game.Map.tilesheet:getWidth(),
+          	Game.Map.tilesheet:getHeight()
+        	)
         id = id + 1
-      end
+      	end
     end
     print("Textures loaded.")
     ----
@@ -92,16 +93,16 @@ function Game.Draw()
 
 	----Drawing the actual textures "cut" off the tilesheet in Game.Load()
 	local c, l = 0,0
-    for l = 1, Game.Map.MAP_HEIGHT do
-      for c = 1, Game.Map.MAP_WIDTH do
-        local id = Game.Map.Grid[l][c]
-        local texQuad = Game.Map.TileTextures[id]
-        if texQuad ~= nil then
-            local x = (c - 1) * Game.Map.TILE_WIDTH
-            local y = (l - 1) * Game.Map.TILE_HEIGHT
-            love.graphics.draw(Game.Map.tilesheet, texQuad, x, y)
-        end
-      end
+	for l = 1, Game.Map.MAP_HEIGHT do
+     	for c = 1, Game.Map.MAP_WIDTH do
+        	local id = Game.Map.Grid[l][c]
+        	local texQuad = Game.Map.TileTextures[id]
+        	if texQuad ~= nil then
+            	local x = (c - 1) * Game.Map.TILE_WIDTH
+            	local y = (l - 1) * Game.Map.TILE_HEIGHT
+            	love.graphics.draw(Game.Map.tilesheet, texQuad, x, y)
+        	end
+      	end
     end
     ----
 
@@ -111,14 +112,13 @@ function Game.Draw()
     --We add one because of 1-based tables in lua (instead of 0)
     local col = math.floor(mouseX / Game.Map.TILE_WIDTH) + 1
     local line = math.floor(mouseY / Game.Map.TILE_HEIGHT) + 1
-    if col > 0 and col <= Game.Map.MAP_WIDTH and line > 0 and line <= Game.Map.MAP_HEIGHT then
 
+    if col > 0 and col <= Game.Map.MAP_WIDTH and line > 0 and line <= Game.Map.MAP_HEIGHT then
     	local id = Game.Map.Grid[line][col]
 
     	love.graphics.setColor(255,0,0)
     	love.graphics.print("Type de tile : ".. tostring(Game.Map.TileTypes[id]) .. " (ID = " .. tostring(id) .. ")", 10, GAME_HEIGHT - 32, 0,2,2)
      	love.graphics.setColor(255,255,255)
-
     else
       	love.graphics.print("Hors du tableau !", 10, GAME_HEIGHT - 32, 0,2,2)
     end
