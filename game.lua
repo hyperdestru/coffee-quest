@@ -5,6 +5,8 @@
 
 local Game = {}
 
+Game.Hero = require('hero')
+
 Game.Map = {}
 Game.Map.Grid = {}
 Game.Map.tilesheet = nil
@@ -35,7 +37,6 @@ function Game.Load()
 
 	Game.music_theme = love.audio.newSource('sounds/cq_theme_overworld.wav', 'stream')
 	Game.music_theme:isLooping(true)
-	Game.music_theme:play()
 
 	Game.Map.tilesheet = love.graphics.newImage('images/map-tilesheet-grid.png')
 	Game.Map.TileTextures[0] = nil
@@ -86,12 +87,25 @@ function Game.Load()
 	end
 	print("Textures types loaded.")
 
+	----LOAD HERO 
+	Game.Hero.Load()
+	----
+
 end
 
+function Game.Update(dt)
+
+	Game.music_theme:play()
+
+	----UPDATE HERO
+	Game.Hero.Update(dt, Game.Map)
+	----
+
+end
 
 function Game.Draw()
 
-	----Drawing the actual textures "cut" off the tilesheet in Game.Load()
+	----DRAW TEXTURES (cut off the tilesheet at load)
 	local c, l = 0,0
 	for l = 1, Game.Map.MAP_HEIGHT do
      	for c = 1, Game.Map.MAP_WIDTH do
@@ -122,6 +136,10 @@ function Game.Draw()
     else
       	love.graphics.print("Hors du tableau !", 10, GAME_HEIGHT - 32, 0,2,2)
     end
+    ----
+
+	----DRAW HERO
+    Game.Hero.Draw(Game.Map)
     ----
     
 end

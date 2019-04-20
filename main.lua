@@ -17,13 +17,20 @@ love.graphics.setDefaultFilter("nearest")
 Game = require('game')
 
 function love.load()
+
 	Game.Load()
+
 end
 
 function love.update(dt)
+
+	Game.Update(dt)
+
 end
 
 function love.draw()
+
 	Game.Draw()
+
 end
 
