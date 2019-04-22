@@ -4,33 +4,23 @@
 	Made with : Love2D
 	Platforms : Linux, Windows.
 	Authors :
-		Gael aka Hyperdestru : programming, game design.
-		Thomas aka Teauma : graphics, writting, game design.
-		Alex aka Grobato aka Xael : sound design, music, game design.
-	Licence :
-	2019 ©
+		Thomas aka Teauma : graphics, writting
+		Alex aka Grobato aka Xael : sound design, music
+		Gael aka Hyperdestru : programming
 --]]
 
-io.stdout:setvbuf('no')
-love.graphics.setDefaultFilter("nearest")
 
-Game = require('game')
+Overworld = require('overworld')
 
 function love.load()
-
-	Game.Load()
-
+	Overworld.Load()
 end
 
 function love.update(dt)
-
-	Game.Update(dt)
-
+	Overworld.Update(dt)
 end
 
 function love.draw()
-
-	Game.Draw()
-
+	Overworld.Draw()
 end
 
