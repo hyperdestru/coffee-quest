@@ -10,17 +10,17 @@
 --]]
 
 
-Overworld = require('overworld')
+overworld = require('overworld')
 
 function love.load()
-	Overworld.Load()
+	overworld.Load()
 end
 
 function love.update(dt)
-	Overworld.Update(dt)
+	overworld.Update(dt)
 end
 
 function love.draw()
-	Overworld.Draw()
+	overworld.Draw()
 end
 
