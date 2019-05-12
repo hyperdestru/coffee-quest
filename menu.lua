@@ -1,9 +1,18 @@
 local menu = {}
 
+local def = require('define')
+
+menu.theme = nil
 menu.img = nil
 
 function menu.Load()
+	menu.theme = love.audio.newSource('sounds/cq-theme-menu.mp3', 'stream')
+	menu.theme:isLooping(true)
 	menu.img = love.graphics.newImage('images/cq-menu.png')
+end
+
+function menu.Update(dt)
+	menu.theme:play()
 end
 
 function menu.Draw()
@@ -12,7 +21,8 @@ end
 
 function menu.Keypressed(key)
 	if key == 'space' then
-		__currentscreen__ = 'overworld'
+		menu.theme:stop()
+		def.current_screen = 'overworld'
 	end
 end
 

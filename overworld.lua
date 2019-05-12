@@ -5,6 +5,9 @@
 
 local world = {}
 
+local def = require('define')
+local transition = require('transition')
+
 world.map = {}
 world.map.grid = {}
 world.map.tilesheet = nil
@@ -34,11 +37,15 @@ hero.img = nil
 hero.line = nil
 hero.column = nil
 
+local mask = {}
+mask.alpha = 1
+mask.fadeout = false
 
 function world.Load()
 
 	world.theme = love.audio.newSource('sounds/cq-theme-overworld.mp3', 'stream')
 	world.theme:isLooping(true)
+	world.theme:setVolume(0)
 
 	world.map.tilesheet = love.graphics.newImage('images/map-tilesheet-grid.png')
 	world.map.tiletextures[0] = nil
@@ -94,6 +101,8 @@ end
 function world.Update(dt)
 
 	world.theme:play()
+
+	transition.Update(dt, 'fadeout', world.theme)
 
 	local mx = math.floor(love.mouse.getX() / world.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / world.map.TILE_HEIGHT) + 1
@@ -159,7 +168,9 @@ function world.Draw()
 	local x = (hero.column - 1) * world.map.TILE_WIDTH
 	local y = (hero.line - 1) * world.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
-    
+
+	transition.Draw('fadeout')
+
 end
 
 return world
