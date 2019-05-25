@@ -1,6 +1,6 @@
-local menu = {}
-
 local def = require('define')
+
+local menu = {}
 
 menu.theme = nil
 menu.img = nil

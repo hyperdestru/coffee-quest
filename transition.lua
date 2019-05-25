@@ -1,6 +1,6 @@
-local tr = {}
-
 local def = require('define')
+
+local tr = {}
 
 tr.alpha_in = 0
 tr.alpha_out = 1

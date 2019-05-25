@@ -1,12 +1,7 @@
---[[ 
-		This file holds the overworld of coffee quest
-		Meaning, the map and the hero on the map
---]]
-
-local world = {}
-
 local def = require('define')
 local transition = require('transition')
+
+local world = {}
 
 world.map = {}
 world.map.grid = {}
@@ -37,9 +32,14 @@ hero.img = nil
 hero.line = nil
 hero.column = nil
 
-local mask = {}
-mask.alpha = 1
-mask.fadeout = false
+function world.map.isSea(id)
+	if world.map.tiletypes[id] == 'sea' then
+		return true
+	else
+		return false
+	end
+	return false
+end
 
 function world.Load()
 
@@ -107,8 +107,10 @@ function world.Update(dt)
 	local mx = math.floor(love.mouse.getX() / world.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / world.map.TILE_HEIGHT) + 1
 
-
 		if love.mouse.isDown(1) then
+
+			local old_column = hero.column
+			local old_line = hero.line
 
 			--Going right
 			if mx == hero.column + 1 and my == hero.line then
@@ -139,6 +141,14 @@ function world.Update(dt)
 				hero.column = hero.column + 1
 				hero.line = hero.line - 1
 			end
+
+			----HERO COLLIDES WITH SEA TILES
+			local id = world.map.grid[hero.line][hero.column]
+			if world.map.isSea(id) == true then
+				hero.column = old_column
+				hero.line = old_line
+			end
+			----
 
 		end
 

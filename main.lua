@@ -1,13 +1,3 @@
---[[
-	COFFEE QUEST
-	Adventure 2D game - Go look for the truth about the untold legend of the never ending coffee bean. 
-	Made with : Love2D
-	Authors :
-		Thomas aka Teauma : graphics, writting
-		Alex aka Grobato aka Xael : sound design, music
-		Gael aka Hyperdestru : programming
---]]
-
 local def = require('define')
 local overworld = require('overworld')
 local menu = require('menu')
