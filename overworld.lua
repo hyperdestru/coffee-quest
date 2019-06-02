@@ -102,7 +102,8 @@ function world.Update(dt)
 
 	world.theme:play()
 
-	transition.Update(dt, 'fadeout', world.theme)
+	transition.screenFadeout(dt)
+	transition.musicFadeout(dt, world.theme, 1)
 
 	local mx = math.floor(love.mouse.getX() / world.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / world.map.TILE_HEIGHT) + 1
@@ -179,7 +180,7 @@ function world.Draw()
 	local y = (hero.line - 1) * world.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
 
-	transition.Draw('fadeout')
+	transition.drawFadeout()
 
 end
 
