@@ -1,8 +1,7 @@
-local def = {}
+local this = {}
 
-def.current_screen = 'menu'
-def.SCREEN_WIDTH = love.graphics.getWidth()
-def.SCREEN_HEIGHT = love.graphics.getHeight()
+this.current_screen = 'menu'
+this.SCREEN_WIDTH = love.graphics.getWidth()
+this.SCREEN_HEIGHT = love.graphics.getHeight()
 
-return def
-
+return this

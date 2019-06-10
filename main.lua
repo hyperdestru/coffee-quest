@@ -1,6 +1,7 @@
 local def = require('define')
 local overworld = require('overworld')
 local menu = require('menu')
+local city = require('city')
 
 function love.load()
 
@@ -8,6 +9,7 @@ function love.load()
 
 	menu.Load()
 	overworld.Load()
+	city.Load()
 
 end
 
@@ -17,6 +19,8 @@ function love.update(dt)
 		menu.Update(dt)
 	elseif def.current_screen == 'overworld' then 
 		overworld.Update(dt) 
+	elseif def.current_screen == 'city' then
+		city.Update(dt)
 	end
 
 end
@@ -27,6 +31,8 @@ function love.draw()
 		menu.Draw()
 	elseif def.current_screen == 'overworld' then
 		overworld.Draw()
+	elseif def.current_screen == 'city' then
+		city.Draw()
 	end
 
 end

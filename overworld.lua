@@ -1,15 +1,14 @@
 local def = require('define')
-local transition = require('transition')
 
-local world = {}
+local this = {}
 
-world.map = {}
-world.map.grid = {}
-world.map.tilesheet = nil
-world.map.tiletextures = {}
-world.map.tiletypes = {}
+this.map = {}
+this.map.grid = {}
+this.map.tilesheet = nil
+this.map.tiletextures = {}
+this.map.tiletypes = {}
 
-world.map.grid = {
+this.map.grid = {
 	{ 1,2,3,4,5,6,7,8,9 },
 	{ 10,11,12,13,14,15,16,17,18 },
 	{ 19,20,21,22,23,24,25,26,27 },
@@ -19,12 +18,13 @@ world.map.grid = {
 	{ 55,56,57,58,59,60,61,62,63 }
 }
 
-world.map.MAP_WIDTH = 9
-world.map.MAP_HEIGHT = 7
-world.map.TILE_WIDTH = 100
-world.map.TILE_HEIGHT = 100
+this.map.MAP_WIDTH = 9
+this.map.MAP_HEIGHT = 7
+this.map.TILE_WIDTH = 100
+this.map.TILE_HEIGHT = 100
 
-world.theme = nil
+this.theme = nil
+this.alpha = 1
 
 local hero = {}
 
@@ -32,8 +32,8 @@ hero.img = nil
 hero.line = nil
 hero.column = nil
 
-function world.map.isSea(id)
-	if world.map.tiletypes[id] == 'sea' then
+function this.map.isSea(id)
+	if this.map.tiletypes[id] == 'sea' then
 		return true
 	else
 		return false
@@ -41,30 +41,39 @@ function world.map.isSea(id)
 	return false
 end
 
-function world.Load()
+function this.map.isCity(id)
+	if this.map.tiletypes[id] == 'city' then
+		return true
+	else
+		return false
+	end
+	return false
+end
 
-	world.theme = love.audio.newSource('sounds/cq-theme-overworld.mp3', 'stream')
-	world.theme:isLooping(true)
-	world.theme:setVolume(0)
+function this.Load()
 
-	world.map.tilesheet = love.graphics.newImage('images/map-tilesheet-grid.png')
-	world.map.tiletextures[0] = nil
+	this.theme = love.audio.newSource('sounds/cq-theme-overworld.mp3', 'stream')
+	this.theme:isLooping(true)
+	this.theme:setVolume(0)
+
+	this.map.tilesheet = love.graphics.newImage('images/map-tilesheet-grid.png')
+	this.map.tiletextures[0] = nil
 
 	--Reading/cuting each tilesheet tiles one by one : not related to the screen in any way
-    local nb_cols = world.map.tilesheet:getWidth() / world.map.TILE_WIDTH
-    local nb_lines = world.map.tilesheet:getHeight() / world.map.TILE_HEIGHT
+    local nb_cols = this.map.tilesheet:getWidth() / this.map.TILE_WIDTH
+    local nb_lines = this.map.tilesheet:getHeight() / this.map.TILE_HEIGHT
     local l, c = 0, 0
     local id = 1
 
     for l = 1, nb_lines do
     	for c = 1, nb_cols do
-        	world.map.tiletextures[id] = love.graphics.newQuad(
-          	(c - 1) * world.map.TILE_WIDTH, 
-          	(l - 1) * world.map.TILE_HEIGHT, 
-          	world.map.TILE_WIDTH, 
-          	world.map.TILE_HEIGHT, 
-          	world.map.tilesheet:getWidth(),
-          	world.map.tilesheet:getHeight()
+        	this.map.tiletextures[id] = love.graphics.newQuad(
+          	(c - 1) * this.map.TILE_WIDTH, 
+          	(l - 1) * this.map.TILE_HEIGHT, 
+          	this.map.TILE_WIDTH, 
+          	this.map.TILE_HEIGHT, 
+          	this.map.tilesheet:getWidth(),
+          	this.map.tilesheet:getHeight()
         	)
         id = id + 1
       	end
@@ -87,29 +96,40 @@ function world.Load()
 
 		for i = 1, #types do
 			for j = 1, #types[i] do
-				world.map.tiletypes[types[i][j]] = types[i].name
+				this.map.tiletypes[types[i][j]] = types[i].name
 			end
 		end
 	end
 
 	hero.img = love.graphics.newImage('images/cq-hero-overworld.png')
 	hero.line = 1
-	hero.column = 8
+	hero.column = 7
 
 end
 
-function world.Update(dt)
+function this.Update(dt)
 
-	world.theme:play()
+	----TRANSITIONS
+	this.theme:play()
+	local vol = this.theme:getVolume()
+	if vol < 1 then
+		vol = vol + (60*dt) / 600
+	else
+		vol = 1
+	end
+	this.theme:setVolume(vol)
 
-	transition.screenFadeout(dt)
-	transition.musicFadeout(dt, world.theme, 1)
+	if this.alpha > 0 then
+		this.alpha = this.alpha - (60*dt) / 200
+ 	else
+		this.alpha = 0
+	end
+	----
 
-	local mx = math.floor(love.mouse.getX() / world.map.TILE_WIDTH) + 1
-	local my = math.floor(love.mouse.getY() / world.map.TILE_HEIGHT) + 1
+	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
+	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
 
 		if love.mouse.isDown(1) then
-
 			local old_column = hero.column
 			local old_line = hero.line
 
@@ -142,33 +162,35 @@ function world.Update(dt)
 				hero.column = hero.column + 1
 				hero.line = hero.line - 1
 			end
-
-			----HERO COLLIDES WITH SEA TILES
-			local id = world.map.grid[hero.line][hero.column]
-			if world.map.isSea(id) == true then
-				hero.column = old_column
-				hero.line = old_line
-			end
-			----
-
 		end
 
+		local id = this.map.grid[hero.line][hero.column]
+
+		if this.map.isSea(id) == true then
+			hero.column = old_column
+			hero.line = old_line
+		end
+
+		if this.map.isCity(id) == true then
+			this.theme:stop()
+			def.current_screen = 'city'
+		end
 end
 
-function world.Draw()
+function this.Draw()
 
 	----DRAW TEXTURES (cut off the tilesheet in load)
 	do
 		local c, l
 
-		for l = 1, world.map.MAP_HEIGHT do
-	     	for c = 1, world.map.MAP_WIDTH do
-	        	local id = world.map.grid[l][c]
-	        	local texQuad = world.map.tiletextures[id]
+		for l = 1, this.map.MAP_HEIGHT do
+	     	for c = 1, this.map.MAP_WIDTH do
+	        	local id = this.map.grid[l][c]
+	        	local texQuad = this.map.tiletextures[id]
 	        	if texQuad ~= nil then
-	            	local x = (c - 1) * world.map.TILE_WIDTH
-	            	local y = (l - 1) * world.map.TILE_HEIGHT
-	            	love.graphics.draw(world.map.tilesheet, texQuad, x, y)
+	            	local x = (c - 1) * this.map.TILE_WIDTH
+	            	local y = (l - 1) * this.map.TILE_HEIGHT
+	            	love.graphics.draw(this.map.tilesheet, texQuad, x, y)
 	        	end
 	      	end
 	    end
@@ -176,12 +198,16 @@ function world.Draw()
 	end
     ----
 
-	local x = (hero.column - 1) * world.map.TILE_WIDTH
-	local y = (hero.line - 1) * world.map.TILE_HEIGHT
+	local x = (hero.column - 1) * this.map.TILE_WIDTH
+	local y = (hero.line - 1) * this.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
 
-	transition.drawFadeout()
+	----DRAW TRANSITIONS
+	love.graphics.setColor(0,0,0, this.alpha)
+	love.graphics.rectangle('fill', 0, 0, def.SCREEN_WIDTH, def.SCREEN_HEIGHT)
+	love.graphics.setColor(1,1,1,1)
+	----
 
 end
 
-return world
+return this

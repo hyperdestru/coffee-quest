@@ -1,29 +1,29 @@
 local def = require('define')
 
-local menu = {}
+local this = {}
 
-menu.theme = nil
-menu.img = nil
+this.theme = nil
+this.img = nil
 
-function menu.Load()
-	menu.theme = love.audio.newSource('sounds/cq-theme-menu.mp3', 'stream')
-	menu.theme:isLooping(true)
-	menu.img = love.graphics.newImage('images/cq-menu.png')
+function this.Load()
+	this.theme = love.audio.newSource('sounds/cq-theme-this.mp3', 'stream')
+	this.theme:isLooping(true)
+	this.img = love.graphics.newImage('images/cq-this.png')
 end
 
-function menu.Update(dt)
-	menu.theme:play()
+function this.Update(dt)
+	this.theme:play()
 end
 
-function menu.Draw()
-	love.graphics.draw(menu.img)
+function this.Draw()
+	love.graphics.draw(this.img)
 end
 
-function menu.Keypressed(key)
+function this.Keypressed(key)
 	if key == 'space' then
-		menu.theme:stop()
+		this.theme:stop()
 		def.current_screen = 'overworld'
 	end
 end
 
-return menu
+return this
