@@ -1,4 +1,5 @@
 local def = require('define')
+local transition = require('transitions')
 
 local this = {}
 
@@ -24,7 +25,6 @@ this.map.TILE_WIDTH = 100
 this.map.TILE_HEIGHT = 100
 
 this.theme = nil
-this.alpha = 1
 
 local hero = {}
 
@@ -104,27 +104,14 @@ function this.Load()
 	hero.img = love.graphics.newImage('images/cq-hero-overworld.png')
 	hero.line = 1
 	hero.column = 7
-
 end
 
 function this.Update(dt)
 
-	----TRANSITIONS
 	this.theme:play()
-	local vol = this.theme:getVolume()
-	if vol < 1 then
-		vol = vol + (60*dt) / 600
-	else
-		vol = 1
-	end
-	this.theme:setVolume(vol)
 
-	if this.alpha > 0 then
-		this.alpha = this.alpha - (60*dt) / 200
- 	else
-		this.alpha = 0
-	end
-	----
+	transition.musicFadeout.Update(dt, this.theme, 1)
+	transition.screenFadeout.Update(dt)
 
 	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
@@ -202,11 +189,7 @@ function this.Draw()
 	local y = (hero.line - 1) * this.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
 
-	----DRAW TRANSITIONS
-	love.graphics.setColor(0,0,0, this.alpha)
-	love.graphics.rectangle('fill', 0, 0, def.SCREEN_WIDTH, def.SCREEN_HEIGHT)
-	love.graphics.setColor(1,1,1,1)
-	----
+	transition.screenFadeout.Draw()
 
 end
 
