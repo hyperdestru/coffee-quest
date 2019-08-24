@@ -50,7 +50,7 @@ function this.map.isCity(id)
 	return false
 end
 
-function this.Load()
+function this.load()
 
 	this.theme = love.audio.newSource('sounds/cq-theme-overworld.mp3', 'stream')
 	this.theme:isLooping(true)
@@ -93,7 +93,6 @@ function this.Load()
 
 	do
 		local i, j
-
 		for i = 1, #types do
 			for j = 1, #types[i] do
 				this.map.tiletypes[types[i][j]] = types[i].name
@@ -106,70 +105,67 @@ function this.Load()
 	hero.column = 7
 end
 
-function this.Update(dt)
+function this.update(dt)
 
 	this.theme:play()
 
-	transition.musicFadeout.Update(dt, this.theme, 1)
-	transition.screenFadeout.Update(dt)
+	transition.musicFadeout.update(dt, this.theme, 1)
+	transition.screenFadeout.update(dt)
 
 	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
+	local old_column = hero.column
+	local old_line = hero.line
 
-		if love.mouse.isDown(1) then
-			local old_column = hero.column
-			local old_line = hero.line
-
-			--Going right
-			if mx == hero.column + 1 and my == hero.line then
-				hero.column = hero.column + 1
-			--Going left
-			elseif mx == hero.column - 1 and my == hero.line then
-				hero.column = hero.column - 1
-			--Going down
-			elseif my == hero.line + 1 and mx == hero.column then
-				hero.line = hero.line + 1
-			--Going up
-			elseif my == hero.line - 1 and mx == hero.column then
-				hero.line = hero.line - 1
-			--Going diagonal down-left
-			elseif mx == hero.column - 1 and my == hero.line + 1 then
-				hero.column = hero.column - 1
-				hero.line = hero.line + 1
-			--Going diagonal up-left
-			elseif mx == hero.column - 1 and my == hero.line - 1 then
-				hero.column = hero.column - 1
-				hero.line = hero.line - 1
-			--Going diagonal down-right
-			elseif mx == hero.column + 1 and my == hero.line + 1 then
-				hero.column = hero.column + 1
-				hero.line = hero.line + 1
-			--Going diagonal up-right
-			elseif mx == hero.column + 1 and my == hero.line - 1 then
-				hero.column = hero.column + 1
-				hero.line = hero.line - 1
-			end
+	if love.mouse.isDown(1) then
+		--Going right
+		if mx == hero.column + 1 and my == hero.line then
+			hero.column = hero.column + 1
+		--Going left
+		elseif mx == hero.column - 1 and my == hero.line then
+			hero.column = hero.column - 1
+		--Going down
+		elseif my == hero.line + 1 and mx == hero.column then
+			hero.line = hero.line + 1
+		--Going up
+		elseif my == hero.line - 1 and mx == hero.column then
+			hero.line = hero.line - 1
+		--Going diagonal down-left
+		elseif mx == hero.column - 1 and my == hero.line + 1 then
+			hero.column = hero.column - 1
+			hero.line = hero.line + 1
+		--Going diagonal up-left
+		elseif mx == hero.column - 1 and my == hero.line - 1 then
+			hero.column = hero.column - 1
+			hero.line = hero.line - 1
+		--Going diagonal down-right
+		elseif mx == hero.column + 1 and my == hero.line + 1 then
+			hero.column = hero.column + 1
+			hero.line = hero.line + 1
+		--Going diagonal up-right
+		elseif mx == hero.column + 1 and my == hero.line - 1 then
+			hero.column = hero.column + 1
+			hero.line = hero.line - 1
 		end
+	end
 
-		local id = this.map.grid[hero.line][hero.column]
+	local id = this.map.grid[hero.line][hero.column]
+	if this.map.isSea(id) == true then
+		hero.column = old_column
+		hero.line = old_line
+	end
 
-		if this.map.isSea(id) == true then
-			hero.column = old_column
-			hero.line = old_line
-		end
-
-		if this.map.isCity(id) == true then
-			this.theme:stop()
-			def.current_screen = 'city'
-		end
+	if this.map.isCity(id) == true then
+		this.theme:stop()
+		def.current_screen = 'city'
+	end
 end
 
-function this.Draw()
+function this.draw()
 
 	----DRAW TEXTURES (cut off the tilesheet in load)
 	do
 		local c, l
-
 		for l = 1, this.map.MAP_HEIGHT do
 	     	for c = 1, this.map.MAP_WIDTH do
 	        	local id = this.map.grid[l][c]
@@ -181,7 +177,6 @@ function this.Draw()
 	        	end
 	      	end
 	    end
-
 	end
     ----
 
@@ -189,7 +184,7 @@ function this.Draw()
 	local y = (hero.line - 1) * this.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
 
-	transition.screenFadeout.Draw()
+	transition.screenFadeout.draw()
 
 end
 
