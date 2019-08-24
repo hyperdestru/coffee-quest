@@ -3,17 +3,17 @@ local transition = require('transitions')
 
 local this = {}
 
-function this.Load()
+function this.load()
 end
 
-function this.Update(dt)
-	transition.screenFadeout.Update(dt)
+function this.update(dt)
+	transition.screenFadeout.update(dt)
 end
 
-function this.Draw()
+function this.draw()
 	love.graphics.setBackgroundColor(62/255,92/255,92/255)
 	love.graphics.print("THE CITY. Coming soon...", def.SCREEN_WIDTH/4, def.SCREEN_HEIGHT/2,0,3,3)
-	transition.screenFadeout.Draw()
+	transition.screenFadeout.draw()
 end
 
 return this

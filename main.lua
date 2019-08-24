@@ -4,23 +4,22 @@ local menu = require('menu')
 local city = require('city')
 
 function love.load()
-
 	def.current_screen = 'menu'
 
-	menu.Load()
-	overworld.Load()
-	city.Load()
+	menu.load()
+	overworld.load()
+	city.load()
 
 end
 
 function love.update(dt)
 
 	if def.current_screen == 'menu' then
-		menu.Update(dt)
+		menu.update(dt)
 	elseif def.current_screen == 'overworld' then 
-		overworld.Update(dt) 
+		overworld.update(dt) 
 	elseif def.current_screen == 'city' then
-		city.Update(dt)
+		city.update(dt)
 	end
 
 end
@@ -28,11 +27,11 @@ end
 function love.draw()
 
 	if def.current_screen == 'menu' then
-		menu.Draw()
+		menu.draw()
 	elseif def.current_screen == 'overworld' then
-		overworld.Draw()
+		overworld.draw()
 	elseif def.current_screen == 'city' then
-		city.Draw()
+		city.draw()
 	end
 
 end
@@ -40,7 +39,7 @@ end
 function love.keypressed(key)
 
 	if def.current_screen == 'menu' then
-		menu.Keypressed(key)
+		menu.keypressed(key)
 	end
 
 end
