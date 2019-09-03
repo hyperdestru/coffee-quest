@@ -56,7 +56,7 @@ function this.load()
 	this.theme:isLooping(true)
 	this.theme:setVolume(0)
 
-	this.map.tilesheet = love.graphics.newImage('images/map-tilesheet-grid.png')
+	this.map.tilesheet = love.graphics.newImage('images/overworld/map-tilesheet-grid.png')
 	this.map.tiletextures[0] = nil
 
 	--Reading/cuting each tilesheet tiles one by one : not related to the screen in any way
@@ -100,7 +100,7 @@ function this.load()
 		end
 	end
 
-	hero.img = love.graphics.newImage('images/cq-hero-overworld.png')
+	hero.img = love.graphics.newImage('images/overworld/cq-hero-overworld.png')
 	hero.line = 1
 	hero.column = 7
 end
@@ -150,14 +150,10 @@ function this.update(dt)
 	end
 
 	local id = this.map.grid[hero.line][hero.column]
+	
 	if this.map.isSea(id) == true then
 		hero.column = old_column
 		hero.line = old_line
-	end
-
-	if this.map.isCity(id) == true then
-		this.theme:stop()
-		def.current_screen = 'city'
 	end
 end
 

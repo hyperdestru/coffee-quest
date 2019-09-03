@@ -8,7 +8,7 @@ this.img = nil
 function this.load()
 	this.theme = love.audio.newSource('sounds/cq-theme-menu.mp3', 'stream')
 	this.theme:isLooping(true)
-	this.img = love.graphics.newImage('images/cq-menu.png')
+	this.img = love.graphics.newImage('images/menu/cq-menu.png')
 end
 
 function this.update(dt)
