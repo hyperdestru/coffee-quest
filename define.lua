@@ -16,10 +16,42 @@ this.color.startrek_blue = {101/255,117/255,166/255}
 
 function math.rsign() return love.math.random(2) == 2 and 1 or -1 end
 
-function this.collide(pobj1, pobj2)
-	if (pobj1 == pobj2) then 
-		return false 
+function this.create_screen(pkey, pname, ptable)
+	local screen = {}
+	screen.key = pkey
+    screen.img = love.graphics.newImage("images/"..pname..".png")
+	table.insert(ptable, screen)
+	return screen
+end
+
+function this.draw_screen(ptable)
+	local n
+	for n, screen in ipairs(ptable) do
+		love.graphics.draw(screen.img)
 	end
+end
+
+function this.create_sprite(ptype, pname, px, py, ptable)  
+    local sprite = {}
+    sprite.x = px
+    sprite.y = py
+    sprite.type = ptype
+    sprite.kill = false
+    sprite.img = love.graphics.newImage("images/"..pname..".png")
+    sprite.w = sprite.img:getWidth()
+    sprite.h = sprite.img:getHeight()
+    sprite.tframes = {}
+    sprite.frame = 1
+    sprite.maxFrame = 1
+    sprite.scale = 0
+
+    table.insert(ptable, sprite)
+
+    return sprite
+end
+
+function this.collide(pobj1, pobj2)
+	if (pobj1 == pobj2) then return false end
 
 	local dx = pobj1.x - pobj2.x
 	local dy = pobj1.y - pobj2.y
@@ -95,10 +127,10 @@ function this.purge_sprites(ptable)
 	end
 end
 
-function this.draw_sprites(ptable)
+function this.draw_sprites(pscale, ptable)
 	local n
 	for n, sprite in ipairs(ptable) do
-		love.graphics.draw(sprite.img, sprite.x, sprite.y, 0, sprite.scale, sprite.scale, sprite.w/2, sprite.h/2)
+		love.graphics.draw(sprite.img, sprite.x, sprite.y, 0, pscale, pscale, sprite.w/2, sprite.h/2)
 	end
 end
 
