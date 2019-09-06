@@ -56,7 +56,7 @@ function this.load()
 	this.theme:isLooping(true)
 	this.theme:setVolume(0)
 
-	this.map.tilesheet = love.graphics.newImage('images/overworld/map-tilesheet-grid.png')
+	this.map.tilesheet = love.graphics.newImage('images/overworld/cq-map-grided.png')
 	this.map.tiletextures[0] = nil
 
 	--Reading/cuting each tilesheet tiles one by one : not related to the screen in any way
@@ -110,7 +110,7 @@ function this.update(dt)
 	this.theme:play()
 
 	transition.musicFadeout.update(dt, this.theme, 1)
-	transition.screenFadeout.update(dt)
+	transition.fadeout.update(dt)
 
 	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
@@ -180,7 +180,7 @@ function this.draw()
 	local y = (hero.line - 1) * this.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
 
-	transition.screenFadeout.draw()
+	transition.fadeout.draw()
 
 end
 

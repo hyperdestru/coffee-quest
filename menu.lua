@@ -22,7 +22,7 @@ end
 function this.keypressed(key)
 	if key == 'space' then
 		this.theme:stop()
-		def.current_screen = 'overworld'
+		def.current_screen = 'intro'
 	end
 end
 
