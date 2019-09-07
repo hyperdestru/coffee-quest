@@ -1,5 +1,4 @@
 local def = require('define')
-local transition = require('transitions')
 
 local this = {}
 
@@ -51,6 +50,8 @@ function this.map.isCity(id)
 end
 
 function this.load()
+	----FADEOUT
+	this.screen_alpha = 1
 
 	this.theme = love.audio.newSource('sounds/cq-theme-overworld.mp3', 'stream')
 	this.theme:isLooping(true)
@@ -109,8 +110,14 @@ function this.update(dt)
 
 	this.theme:play()
 
-	transition.musicFadeout.update(dt, this.theme, 1)
-	transition.fadeout.update(dt)
+	def.music_fade(this.theme, dt)
+
+	----FADEOUT
+	if this.screen_alpha > 0 then
+		this.screen_alpha = this.screen_alpha - (60*dt) / 200
+	else 
+		this.screen_alpha = 0
+	end
 
 	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
@@ -180,7 +187,10 @@ function this.draw()
 	local y = (hero.line - 1) * this.map.TILE_HEIGHT
 	love.graphics.draw(hero.img, x, y)
 
-	transition.fadeout.draw()
+	----FADEOUT
+	love.graphics.setColor(0,0,0, this.screen_alpha)
+	love.graphics.rectangle('fill', 0, 0, def.SCREEN_WIDTH, def.SCREEN_HEIGHT)
+	love.graphics.setColor(1,1,1,1)
 
 end
 
