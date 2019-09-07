@@ -1,9 +1,8 @@
 local this = {}
 
+----General use variables
 this.SCREEN_WIDTH = love.graphics.getWidth()
 this.SCREEN_HEIGHT = love.graphics.getHeight()
-
-this.current_screen = 'menu'
 
 this.color = {}
 this.color.white = {0,0,0}
@@ -14,8 +13,57 @@ this.color.blue = {0,0,1}
 this.color.brown = {102/255, 51/255, 0}
 this.color.startrek_blue = {101/255,117/255,166/255}
 
+this.current_screen = 'menu'
+----
+
+----General use functions
 function math.rsign() return love.math.random(2) == 2 and 1 or -1 end
 
+function this.music_fade(pmusic, dt)
+	local vol = pmusic:getVolume()
+	local max_vol = 1
+	if vol < max_vol then
+		vol = vol + (60*dt) / 600
+	else
+		vol = max_vol
+	end
+	pmusic:setVolume(vol)
+end
+
+function this.load_imgs(path, ptable, pnumber)
+	local i
+	for i = 1, pnumber do
+		ptable[i] = love.graphics.newImage(path .. tostring(i) .. '.png')
+	end
+end
+
+function this.kill_sprites(ptable)
+	local n
+	for n, sprite in ipairs(ptable) do
+		if sprite.kill == false then
+			sprite.kill = true
+		end
+	end
+end
+
+function this.purge_sprites(ptable)
+	local n
+	for n, sprite in ipairs(ptable) do
+		if sprite.kill == true then
+			table.remove(ptable, n)
+		end
+	end
+end
+
+function this.draw_sprites(pscale, ptable)
+	local n
+	for n, sprite in ipairs(ptable) do
+		love.graphics.draw(sprite.img, sprite.x, sprite.y, 0, pscale, pscale, sprite.w/2, sprite.h/2)
+	end
+end
+----
+
+----More for adventure games (textual...), graphic novels etc
 function this.create_screen(pkey, pname, ptable)
 	local screen = {}
 	screen.key = pkey
@@ -30,7 +78,9 @@ function this.draw_screen(ptable)
 		love.graphics.draw(screen.img)
 	end
 end
+----
 
+----More for platformers, shooters etc
 function this.create_sprite(ptype, pname, px, py, ptable)  
     local sprite = {}
     sprite.x = px
@@ -79,22 +129,6 @@ function this.bounce(pobj, pgravity, psurface, pmaxy--[[150]], --[[2.5]]pforcefa
 	end
 end
 
-function this.change_screen(pnew_screen, pdelay)
-	local timer = 0
-	if ptimer <= pdelay then
-		ptimer = ptimer + (10*dt)
-	else
-		this.current_screen = pnew_screen
-	end
-end
-
-function this.load_imgs(path, ptable, pnumber)
-	local i
-	for i = 1, pnumber do
-		ptable[i] = love.graphics.newImage(path .. tostring(i) .. '.png')
-	end
-end
-
 function this.is_out(psprite)
 	if psprite.x - psprite.w/2 > this.SCREEN_WIDTH then
 		psprite.kill = true
@@ -108,30 +142,6 @@ function this.move_x(pobj, dt)
 	pobj.vx = pobj.speed * (60*dt)
 	pobj.x = pobj.x + pobj.vx
 end
-
-function this.kill_sprites(ptable)
-	local n
-	for n, sprite in ipairs(ptable) do
-		if sprite.kill == false then
-			sprite.kill = true
-		end
-	end
-end
-
-function this.purge_sprites(ptable)
-	local n
-	for n, sprite in ipairs(ptable) do
-		if sprite.kill == true then
-			table.remove(ptable, n)
-		end
-	end
-end
-
-function this.draw_sprites(pscale, ptable)
-	local n
-	for n, sprite in ipairs(ptable) do
-		love.graphics.draw(sprite.img, sprite.x, sprite.y, 0, pscale, pscale, sprite.w/2, sprite.h/2)
-	end
-end
+----
 
 return this
