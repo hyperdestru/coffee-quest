@@ -16,7 +16,7 @@ this.color.startrek_blue = {101/255,117/255,166/255}
 this.current_screen = 'menu'
 ----
 
-----General use functions
+----General use
 function math.rsign() return love.math.random(2) == 2 and 1 or -1 end
 
 function this.music_fade(pmusic, dt)
@@ -64,17 +64,17 @@ end
 ----
 
 ----More for adventure games (textual...), graphic novels etc
-function this.create_screen(pkey, pname, ptable)
+function this.create_screen(p_key, p_name, p_table)
 	local screen = {}
-	screen.key = pkey
-    screen.img = love.graphics.newImage("images/"..pname..".png")
-	table.insert(ptable, screen)
+	screen.key = p_key
+    screen.img = love.graphics.newImage(p_name)
+	table.insert(p_table, screen)
 	return screen
 end
 
-function this.draw_screen(ptable)
+function this.draw_screen(p_table)
 	local n
-	for n, screen in ipairs(ptable) do
+	for n, screen in ipairs(p_table) do
 		love.graphics.draw(screen.img)
 	end
 end
