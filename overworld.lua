@@ -26,7 +26,6 @@ this.map.TILE_HEIGHT = 100
 this.theme = nil
 
 local hero = {}
-
 hero.img = nil
 hero.line = nil
 hero.column = nil

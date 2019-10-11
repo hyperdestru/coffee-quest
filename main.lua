@@ -41,9 +41,16 @@ function love.keypressed(key)
 
 	if def.current_screen == 'menu' then
 		menu.keypressed(key)
-	elseif def.current_screen == 'intro' then
-		intro.keypressed(key)
 	end
 
 end
+
+function love.mousepressed(x, y, button, istouch)
+
+	if def.current_screen == 'intro' then
+		intro.mousepressed(x, y, button, istouch)
+	end
+
+end
+
 
