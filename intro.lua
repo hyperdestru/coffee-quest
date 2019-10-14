@@ -4,12 +4,62 @@ local this = {}
 
 this.gui = require('gui')
 
+function this.create_screen(p_id, p_img, p_text, p_table, p_obj_id, p_obj_img)
+	local screen = {}
+	screen.id = p_id
+	screen.img = love.graphics.newImage('images/'..p_img)
+	screen.text = p_text
+	screen.with_obj = nil
+	if p_obj_id == nil then screen.with_obj = false else screen.with_obj = true end
+
+	if screen.with_obj == true then
+		screen.obj = {}
+		screen.obj.id = p_obj_id
+		screen.obj.img = love.graphics.newImage('images/'..p_obj_img)
+	end
+
+	screen.draw = function()
+		love.graphics.draw(screen.img)
+		if screen.with_obj == true then
+			love.graphics.draw(screen.obj.img)
+		end
+	end
+
+	table.insert(p_table, screen)
+	return screen
+end
+
 function this.load()
+	this.t_screens = {}
+
 	this.gui.load()
 
-	this.tscreens = {}
+	this.create_screen(
+		'KITCHEN',
+		'scene-intro/kitchen.png',
+		'this is the kitchen',
+		this.t_screens
+	)
 
-	def.create_screen('intro-1', 'images/scene-intro/kitchen.png', this.tscreens)
+	this.create_screen(
+		'LIVING_ROOM',
+		'scene-intro/living-room.png',
+		'this is the living room',
+		this.t_screens,
+		'MOL',
+		'scene-intro/mol-palana-seated.png'
+	)
+
+	this.create_screen(
+		'COFFEE_SHOP',
+		'scene-intro/coffee-shop.png',
+		'this is the coffee shop',
+		this.t_screens,
+		'COFFEE_SHOP_BOSS',
+		'scene-intro/coffee-shop-boss.png'
+	)
+
+	this.DRAW_INDEX = 1
 
 	----FADEOUT
 	this.screen_alpha = 1
@@ -29,7 +79,7 @@ function this.update(dt)
 end
 
 function this.draw()
-	def.draw_screen(this.tscreens)
+	this.t_screens[this.DRAW_INDEX].draw()
 
 	this.gui.draw()
 
@@ -41,8 +91,8 @@ function this.draw()
 end
 
 function this.mousepressed(x, y, button, istouch)
-	if button == 1 then
-		def.create_screen('intro-2', 'images/scene-intro/living-room.png', this.tscreens)
+	if button == 1 and this.DRAW_INDEX < #this.t_screens  then
+		this.DRAW_INDEX = this.DRAW_INDEX + 1
 	end
 end
 
