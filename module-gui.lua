@@ -87,7 +87,7 @@ end
 function gui.new_text(px, py, pw, ph, p_text, p_font, p_align_x, p_align_y, p_color)
 	local my_text = gui.new_panel(px, py, pw, ph)
 	my_text.text = p_text
-	my_text.font = p_font
+	my_text.font = love.graphics.newFont(p_font)
 	my_text.text_w = my_text.font:getWidth(p_text)
 	my_text.text_h = my_text.font:getHeight(p_text)
 	my_text.align_x = p_align_x
