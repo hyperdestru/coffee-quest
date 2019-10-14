@@ -4,7 +4,7 @@ local gui_module = require('module-gui')
 local this = {}
 
 function this.load()
-	this.font = love.graphics.newFont('fonts/font-vera-sans/vera.ttf', 20)
+	this.font = 'fonts/font-vera-sans/vera.ttf'
 	this.font_color = def.color.white
 
 	this.img_main_textbox = love.graphics.newImage('images/gui/panel-textbox-purple.png')
@@ -15,7 +15,7 @@ function this.load()
 
 	this.group = gui_module.new_group()
 
-	this.main_textbox = gui_module.new_panel(150, 500)
+	this.main_textbox = gui_module.new_panel(150, 490)
 	this.main_textbox:set_image(this.img_main_textbox)
 	this.group:add_elements(this.main_textbox)
 
@@ -50,6 +50,13 @@ function this.load()
 		love.graphics.newImage('images/gui/button-next.png')
 	)
 	this.group:add_elements(this.button_next)
+
+	this.b_container = {}
+	this.b_container.w = def.SCREEN_WIDTH
+	this.b_container.h = 50
+	this.b_container.x = 0
+	this.b_container.y = def.SCREEN_HEIGHT - this.b_container.h
+	this.b_container.color = {0,0,0}
 end
 
 function this.update(dt)
@@ -57,7 +64,10 @@ function this.update(dt)
 end
 
 function this.draw()
-	love.graphics.rectangle('fill', 0, def.SCREEN_HEIGHT-50, def.SCREEN_WIDTH, 50)
+	love.graphics.setColor(this.b_container.color)
+	love.graphics.rectangle('fill', this.b_container.x, this.b_container.y, this.b_container.w, this.b_container.h)
+	love.graphics.setColor(1,1,1)
+
 	this.group:draw()
 end
 
