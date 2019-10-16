@@ -72,11 +72,12 @@ function gui.new_panel(px, py, pw, ph)
 		else
 			love.graphics.draw(self.img, self.x, self.y)
 		end
-		--love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
 	end
 
 	function my_panel:draw()
-		if self.visible == false then return end
+		if self.visible == false then 
+			return 
+		end
 		self:draw_panel()
 	end
 
@@ -93,7 +94,11 @@ function gui.new_text(px, py, pw, ph, p_text, p_font, p_align_x, p_align_y, p_co
 	my_text.align_x = p_align_x
 	my_text.align_y = p_align_y
 	my_text.color = {}
-	if p_color == nil then my_text.color = {1,1,1} else my_text.color = p_color end
+	if p_color == nil then 
+		my_text.color = {1,1,1} 
+	else 
+		my_text.color = p_color 
+	end
 
 	function my_text:draw_text()
 		love.graphics.setColor(self.color)
@@ -110,18 +115,21 @@ function gui.new_text(px, py, pw, ph, p_text, p_font, p_align_x, p_align_y, p_co
 		end
 
 		love.graphics.print(self.text, x, y)
-		--love.graphics.rectangle('line', self.x, self.y, self.text_w, self.text_h)
 	end
 
 	function my_text:draw()
-		if self.visible == false then return end
+		if self.visible == false then 
+			return 
+		end
 		self:draw_text()
 	end
 
 	return my_text
 end
 
-
+--p_color is used for the button label color (the text inside the button)
+--i.e my_button label below and gui.new_text() which uses this parameter
+--if no color is provided (p_color = nil) then default color is white (0,0,0) : see gui.new_text() function
 function gui.new_button(px, py, pw, ph, p_text, p_font, p_color)
 	local my_button = gui.new_panel(px, py, pw, ph)
 	my_button.text = p_text
@@ -166,7 +174,7 @@ function gui.new_button(px, py, pw, ph, p_text, p_font, p_color)
 				self.is_pressed = true
 		else
 			if love.mouse.isDown(1) == false and self.is_pressed == true then
-					self.is_pressed = false
+				self.is_pressed = false
 			end
 		end
 
@@ -197,6 +205,7 @@ function gui.new_button(px, py, pw, ph, p_text, p_font, p_color)
 			end
 
 		else
+			
 			if self.img_default == nil then
 				self:draw_panel()
 			else
