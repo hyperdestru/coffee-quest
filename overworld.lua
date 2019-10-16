@@ -25,10 +25,10 @@ this.map.TILE_HEIGHT = 100
 
 this.theme = nil
 
-local hero = {}
-hero.img = nil
-hero.line = nil
-hero.column = nil
+this.hero = {}
+this.hero.img = nil
+this.hero.line = nil
+this.hero.column = nil
 
 function this.map.isSea(id)
 	if this.map.tiletypes[id] == 'sea' then
@@ -49,14 +49,11 @@ function this.map.isCity(id)
 end
 
 function this.load()
-	----FADEOUT
-	this.screen_alpha = 1
-
-	this.theme = love.audio.newSource('sounds/cq-theme-overworld.mp3', 'stream')
+	this.theme = love.audio.newSource('sounds/overworld/overworld-theme.mp3', 'stream')
 	this.theme:isLooping(true)
 	this.theme:setVolume(0)
 
-	this.map.tilesheet = love.graphics.newImage('images/overworld/cq-map-grided.png')
+	this.map.tilesheet = love.graphics.newImage('images/overworld/map.png')
 	this.map.tiletextures[0] = nil
 
 	--Reading/cuting each tilesheet tiles one by one : not related to the screen in any way
@@ -100,9 +97,9 @@ function this.load()
 		end
 	end
 
-	hero.img = love.graphics.newImage('images/overworld/cq-hero-overworld.png')
-	hero.line = 1
-	hero.column = 7
+	this.hero.img = love.graphics.newImage('images/overworld/hero.png')
+	this.hero.line = 1
+	this.hero.column = 7
 end
 
 function this.update(dt)
@@ -111,55 +108,48 @@ function this.update(dt)
 
 	def.music_fade(this.theme, dt)
 
-	----FADEOUT
-	if this.screen_alpha > 0 then
-		this.screen_alpha = this.screen_alpha - (60*dt) / 200
-	else 
-		this.screen_alpha = 0
-	end
-
 	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
-	local old_column = hero.column
-	local old_line = hero.line
+	local old_column = this.hero.column
+	local old_line = this.hero.line
 
 	if love.mouse.isDown(1) then
 		--Going right
-		if mx == hero.column + 1 and my == hero.line then
-			hero.column = hero.column + 1
+		if mx == this.hero.column + 1 and my == this.hero.line then
+			this.hero.column =this.hero.column + 1
 		--Going left
-		elseif mx == hero.column - 1 and my == hero.line then
-			hero.column = hero.column - 1
+		elseif mx == this.hero.column - 1 and my == this.hero.line then
+			this.hero.column =this.hero.column - 1
 		--Going down
-		elseif my == hero.line + 1 and mx == hero.column then
-			hero.line = hero.line + 1
+		elseif my == this.hero.line + 1 and mx == this.hero.column then
+			this.hero.line = this.hero.line + 1
 		--Going up
-		elseif my == hero.line - 1 and mx == hero.column then
-			hero.line = hero.line - 1
+		elseif my == this.hero.line - 1 and mx == this.hero.column then
+			this.hero.line = this.hero.line - 1
 		--Going diagonal down-left
-		elseif mx == hero.column - 1 and my == hero.line + 1 then
-			hero.column = hero.column - 1
-			hero.line = hero.line + 1
+		elseif mx == this.hero.column - 1 and my == this.hero.line + 1 then
+			this.hero.column = this.hero.column - 1
+			this.hero.line = this.hero.line + 1
 		--Going diagonal up-left
-		elseif mx == hero.column - 1 and my == hero.line - 1 then
-			hero.column = hero.column - 1
-			hero.line = hero.line - 1
+		elseif mx == this.hero.column - 1 and my == this.hero.line - 1 then
+			this.hero.column = this.hero.column - 1
+			this.hero.line = this.hero.line - 1
 		--Going diagonal down-right
-		elseif mx == hero.column + 1 and my == hero.line + 1 then
-			hero.column = hero.column + 1
-			hero.line = hero.line + 1
+		elseif mx == this.hero.column + 1 and my == this.hero.line + 1 then
+			this.hero.column = this.hero.column + 1
+			this.hero.line = this.hero.line + 1
 		--Going diagonal up-right
-		elseif mx == hero.column + 1 and my == hero.line - 1 then
-			hero.column = hero.column + 1
-			hero.line = hero.line - 1
+		elseif mx == this.hero.column + 1 and my == this.hero.line - 1 then
+			this.hero.column = this.hero.column + 1
+			this.hero.line = this.hero.line - 1
 		end
 	end
 
-	local id = this.map.grid[hero.line][hero.column]
+	local id = this.map.grid[this.hero.line][this.hero.column]
 	
 	if this.map.isSea(id) == true then
-		hero.column = old_column
-		hero.line = old_line
+		this.hero.column = old_column
+		this.hero.line = old_line
 	end
 end
 
@@ -182,15 +172,9 @@ function this.draw()
 	end
     ----
 
-	local x = (hero.column - 1) * this.map.TILE_WIDTH
-	local y = (hero.line - 1) * this.map.TILE_HEIGHT
-	love.graphics.draw(hero.img, x, y)
-
-	----FADEOUT
-	love.graphics.setColor(0,0,0, this.screen_alpha)
-	love.graphics.rectangle('fill', 0, 0, def.SCREEN_WIDTH, def.SCREEN_HEIGHT)
-	love.graphics.setColor(1,1,1,1)
-
+	local x = (this.hero.column - 1) * this.map.TILE_WIDTH
+	local y = (this.hero.line - 1) * this.map.TILE_HEIGHT
+	love.graphics.draw(this.hero.img, x, y)
 end
 
 return this
