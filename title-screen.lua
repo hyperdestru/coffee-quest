@@ -19,7 +19,7 @@ end
 function this.keypressed(key)
 	if key == 'space' then
 		this.theme:stop()
-		def.current_screen = 'SCENE_INTRO'
+		def.current_scene = 'SCENE_INTRO'
 	end
 end
 

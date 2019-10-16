@@ -19,7 +19,7 @@ function this.load()
 	this.main_textbox:set_image(this.img_main_textbox)
 	this.group:add_elements(this.main_textbox)
 
-	this.button_music = gui_module.new_button(20, 657, 40, 35, "", this.font, this.font_color)
+	this.button_music = gui_module.new_button(20, 657, 40, 35, "", this.font)
 	this.button_music:set_images(
 		love.graphics.newImage('images/gui/button-music.png'),
 		love.graphics.newImage('images/gui/button-music.png'),
@@ -27,7 +27,7 @@ function this.load()
 	)
 	this.group:add_elements(this.button_music)
 
-	this.button_speaker = gui_module.new_button(60, 657, 40, 35, "", this.font, this.font_color)
+	this.button_speaker = gui_module.new_button(60, 657, 40, 35, "", this.font)
 	this.button_speaker:set_images(
 		love.graphics.newImage('images/gui/button-speaker.png'),
 		love.graphics.newImage('images/gui/button-speaker.png'),
@@ -35,7 +35,7 @@ function this.load()
 	)
 	this.group:add_elements(this.button_speaker)
 
-	this.button_save = gui_module.new_button(100, 657, 40, 35, "", this.font, this.font_color)
+	this.button_save = gui_module.new_button(100, 657, 40, 35, "", this.font)
 	this.button_save:set_images(
 		love.graphics.newImage('images/gui/button-save.png'),
 		love.graphics.newImage('images/gui/button-save.png'),
