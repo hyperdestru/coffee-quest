@@ -1,54 +1,57 @@
 local def = require('define')
-local menu = require('menu')
+
+local title_screen = require('title-screen')
 local overworld = require('overworld')
-local intro = require('intro')
+local scene_intro = require('scene-intro')
 
 function love.load()
 
-	def.current_screen = 'menu'
+	def.current_screen = 'TITLE_SCREEN'
 
-	menu.load()
+	title_screen.load()
 	overworld.load()
-	intro.load()
+	scene_intro.load()
 	
 end
 
 function love.update(dt)
 
-	if def.current_screen == 'menu' then
-		menu.update(dt)
-	elseif def.current_screen == 'overworld' then 
+	if def.current_screen == 'TITLE_SCREEN' then
+		title_screen.update(dt)
+	elseif def.current_screen == 'OVERWORLD' then 
 		overworld.update(dt) 
-	elseif def.current_screen == 'intro' then
-		intro.update(dt)
+	elseif def.current_screen == 'SCENE_INTRO' then
+		scene_intro.update(dt)
 	end
 
 end
 
 function love.draw()
 
-	if def.current_screen == 'menu' then
-		menu.draw()
-	elseif def.current_screen == 'overworld' then
+	if def.current_screen == 'TITLE_SCREEN' then
+		title_screen.draw()
+	elseif def.current_screen == 'OVERWORLD' then
 		overworld.draw()
-	elseif def.current_screen == 'intro' then
-		intro.draw()
+	elseif def.current_screen == 'SCENE_INTRO' then
+		scene_intro.draw()
 	end
 
 end
 
 function love.keypressed(key)
 
-	if def.current_screen == 'menu' then
-		menu.keypressed(key)
+	if def.current_screen == 'TITLE_SCREEN' then
+		title_screen.keypressed(key)
+	elseif def.current_screen == 'SCENE_INTRO' then
+		scene_intro.keypressed(key)
 	end
 
 end
 
 function love.mousepressed(x, y, button, istouch)
 
-	if def.current_screen == 'intro' then
-		intro.mousepressed(x, y, button, istouch)
+	if def.current_screen == 'SCENE_INTRO' then
+		scene_intro.mousepressed(x, y, button, istouch)
 	end
 
 end
