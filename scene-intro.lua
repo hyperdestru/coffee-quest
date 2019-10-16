@@ -74,7 +74,6 @@ end
 
 function this.draw()
 	this.t_screens[this.draw_index].draw()
-
 	this.gui.draw()
 end
 
