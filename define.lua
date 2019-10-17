@@ -6,6 +6,7 @@ this.SCREEN_HEIGHT = love.graphics.getHeight()
 this.color = {}
 this.color.white = {1,1,1}
 this.color.black = {0,0,0}
+this.color.grey = {0.5,0.5,0.5}
 this.color.red = {1,0,0}
 this.color.green = {0,1,0}
 this.color.blue = {0,0,1}
@@ -31,10 +32,11 @@ function this.create_screen(p_id, p_img, p_text, p_table)
 	screen.img = love.graphics.newImage('images/'..p_img)
 	screen.text = p_text
 
-	screen.append_object = function(p_id, p_img)
+	screen.append_object = function(p_id, p_img, p_zone)
 		screen.obj = {}
 		screen.obj.id = p_obj_id
 		screen.obj.img = love.graphics.newImage('images/'..p_img)		
+		screen.obj.zone = p_zone
 	end
 
 	screen.append_character = function(p_id, p_img)
