@@ -4,9 +4,6 @@ local gui_module = require('module-gui')
 local this = {}
 
 function this.load()
-	this.font = 'fonts/font-vera-sans/vera.ttf'
-	this.font_color = def.color.white
-
 	this.img_main_textbox = love.graphics.newImage('images/gui/panel-textbox-purple.png')
 	this.img_button_music = love.graphics.newImage('images/gui/button-music.png')
 	this.img_button_speaker = love.graphics.newImage('images/gui/button-speaker.png')
@@ -22,8 +19,8 @@ function this.load()
 	this.main_text = {}
 	this.main_text.body = "This is the testing text !"
 	this.main_text.margin = 8
-	this.main_text.font = 'fonts/font-vera-sans/vera.ttf'
 	this.main_text.font_size = 20
+	this.main_text.font = love.graphics.newFont('fonts/font-vera-sans/vera.ttf', this.main_text.font_size)
 	this.main_text.instance = gui_module.new_text(
 		this.main_textbox.x + this.main_text.margin,
 		this.main_textbox.y + this.main_text.margin,
@@ -31,7 +28,7 @@ function this.load()
 		this.main_textbox.h,
 		this.main_text.body,
 		this.main_text.font,
-		this.main_text.font_size
+		def.color.black
 	)
 	this.group:add_elements(this.main_text.instance)
 
