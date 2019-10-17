@@ -85,29 +85,11 @@ function gui.new_panel(px, py, pw, ph)
 end
 
 
-function gui.new_text(px, py, pw, ph, p_text, p_font, p_font_size, p_color, p_align_x, p_align_y)
+function gui.new_text(px, py, pw, ph, p_text, p_font, p_color, p_align_x, p_align_y)
 	local my_text = gui.new_panel(px, py, pw, ph)
-	
-	if p_text ~= nil then
-		my_text.text = p_text
-	else
-		my_text.text = ""
-	end
-
-	if p_font ~= nil and p_font_size ~= nil then
-		my_text.font = love.graphics.newFont(p_font, p_font_size) 
-	else
-		--If no font AND font size are set then we create an instance of the love default font (vera sans)
-		--at the default size (12) : must specify a size to create a new default font instance (i.e love doc)
-		my_text.font = love.graphics.newFont(12)
-	end
-
-	if p_color ~= nil then 
-		my_text.color = p_color 
-	else 
-		my_text.color = {1,1,1} 
-	end
-
+	my_text.text = p_text
+	my_text.font = p_font
+	my_text.color = p_color 
 	my_text.text_w = my_text.font:getWidth(my_text.text)
 	my_text.text_h = my_text.font:getHeight(my_text.text)
 	my_text.align_x = p_align_x
@@ -128,6 +110,7 @@ function gui.new_text(px, py, pw, ph, p_text, p_font, p_font_size, p_color, p_al
 		end
 
 		love.graphics.print(self.text, x, y)
+		love.graphics.setColor(1,1,1)
 	end
 
 	function my_text:draw()
@@ -140,12 +123,26 @@ function gui.new_text(px, py, pw, ph, p_text, p_font, p_font_size, p_color, p_al
 	return my_text
 end
 
---p_color is used for the button label color (the text inside the button)
---i.e my_button label below and gui.new_text() which uses this parameter
---if no color is provided (p_color = nil) then default color is white (0,0,0) : see gui.new_text() function
-function gui.new_button(px, py, pw, ph, p_text, p_font, p_font_size, p_color)
+
+function gui.new_button(px, py, pw, ph, p_text, p_font, p_color)
 	local my_button = gui.new_panel(px, py, pw, ph)
-	my_button.label = gui.new_text(px, py, pw, ph, p_text, p_font, p_font_size, p_color, 'center', 'center')
+	----Making text, font, and font color optionnal for image-only buttons
+	if p_text ~= nil then my_button.text = p_text else my_button.text = "" end
+	if p_font ~= nil then my_button.font = p_font else my_button.font = love.graphics.newFont(12) end
+	if p_color ~= nil then my_button.color = p_color else my_button.color = {1,1,1} end
+	----
+	my_button.label = gui.new_text(
+		px, 
+		py, 
+		pw, 
+		ph, 
+		my_button.text, 
+		my_button.font, 
+		my_button.color, 
+		'center', 
+		'center'
+	)
+
 	my_button.img_default = nil
 	my_button.img_hover = nil
 	my_button.img_pressed = nil
