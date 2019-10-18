@@ -1,4 +1,5 @@
 local def = require('define')
+local gui_module = require('module-gui')
 
 local this = {}
 
@@ -8,6 +9,22 @@ function this.load()
 	this.t_screens = {}
 
 	this.gui.load()
+
+	this.main_text = {}
+	this.main_text.body = "Test string!"
+	this.main_text.margin = 8
+	this.main_text.font_size = 20
+	this.main_text.font = love.graphics.newFont('fonts/font-vera-sans/vera.ttf', this.main_text.font_size)
+	this.main_text.instance = gui_module.new_text(
+		this.gui.main_textbox.x + this.main_text.margin,
+		this.gui.main_textbox.y + this.main_text.margin,
+		this.gui.main_textbox.w,
+		this.gui.main_textbox.h,
+		this.main_text.body,
+		this.main_text.font,
+		def.color.black
+	)
+	this.gui.group:add_elements(this.main_text.instance)
 
 	def.create_screen(
 		'KITCHEN',
