@@ -16,8 +16,8 @@ function this.load()
 	this.main_textbox:set_image(this.img_main_textbox)
 	this.group:add_elements(this.main_textbox)
 
-	this.main_text = {}
-	this.main_text.body = "This is the testing text !"
+	--[[this.main_text = {}
+	this.main_text.body = ""
 	this.main_text.margin = 8
 	this.main_text.font_size = 20
 	this.main_text.font = love.graphics.newFont('fonts/font-vera-sans/vera.ttf', this.main_text.font_size)
@@ -30,7 +30,7 @@ function this.load()
 		this.main_text.font,
 		def.color.black
 	)
-	this.group:add_elements(this.main_text.instance)
+	this.group:add_elements(this.main_text.instance)]]
 
 	this.button_music = gui_module.new_button(20, 657, 40, 35)
 	this.button_music:set_images(
