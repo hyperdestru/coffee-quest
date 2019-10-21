@@ -1,14 +1,23 @@
-local def = require('define')
 local gui_module = require('module-gui')
 
 local this = {}
 
 function this.load()
 	this.img_main_textbox = love.graphics.newImage('images/gui/panel-textbox-purple.png')
+
 	this.img_button_music = love.graphics.newImage('images/gui/button-music.png')
+	this.img_button_music_hover = love.graphics.newImage('images/gui/button-music-hover.png')
+	this.img_button_music_pressed = love.graphics.newImage('images/gui/button-music-pressed.png')
+
 	this.img_button_speaker = love.graphics.newImage('images/gui/button-speaker.png')
+	this.img_button_speaker_hover = love.graphics.newImage('images/gui/button-speaker-hover.png')
+	this.img_button_speaker_pressed = love.graphics.newImage('images/gui/button-speaker-pressed.png')
+
 	this.img_button_save = love.graphics.newImage('images/gui/button-save.png')
+	this.img_button_save_hover = love.graphics.newImage('images/gui/button-save-hover.png')
+
 	this.img_button_next = love.graphics.newImage('images/gui/button-next.png')
+	this.img_button_next_hover = love.graphics.newImage('images/gui/button-next-hover.png')
 
 	this.group = gui_module.new_group()
 
@@ -16,60 +25,37 @@ function this.load()
 	this.main_textbox:set_image(this.img_main_textbox)
 	this.group:add_elements(this.main_textbox)
 
-	--[[this.main_text = {}
-	this.main_text.body = ""
-	this.main_text.margin = 8
-	this.main_text.font_size = 20
-	this.main_text.font = love.graphics.newFont('fonts/font-vera-sans/vera.ttf', this.main_text.font_size)
-	this.main_text.instance = gui_module.new_text(
-		this.main_textbox.x + this.main_text.margin,
-		this.main_textbox.y + this.main_text.margin,
-		this.main_textbox.w,
-		this.main_textbox.h,
-		this.main_text.body,
-		this.main_text.font,
-		def.color.black
-	)
-	this.group:add_elements(this.main_text.instance)]]
-
 	this.button_music = gui_module.new_button(20, 657, 40, 35)
 	this.button_music:set_images(
-		love.graphics.newImage('images/gui/button-music.png'),
-		love.graphics.newImage('images/gui/button-music.png'),
-		love.graphics.newImage('images/gui/button-music.png')
+		this.img_button_music,
+		this.img_button_music_hover,
+		this.img_button_music_pressed
 	)
 	this.group:add_elements(this.button_music)
 
 	this.button_speaker = gui_module.new_button(60, 657, 40, 35)
 	this.button_speaker:set_images(
-		love.graphics.newImage('images/gui/button-speaker.png'),
-		love.graphics.newImage('images/gui/button-speaker.png'),
-		love.graphics.newImage('images/gui/button-speaker.png')
+		this.img_button_speaker,
+		this.img_button_speaker_hover,
+		this.img_button_speaker_pressed
 	)
 	this.group:add_elements(this.button_speaker)
 
 	this.button_save = gui_module.new_button(100, 657, 40, 35)
 	this.button_save:set_images(
-		love.graphics.newImage('images/gui/button-save.png'),
-		love.graphics.newImage('images/gui/button-save.png'),
-		love.graphics.newImage('images/gui/button-save.png')
+		this.img_button_save,
+		this.img_button_save_hover,
+		this.img_button_save
 	)
 	this.group:add_elements(this.button_save)
 
 	this.button_next = gui_module.new_button(140, 657, 40, 35)
 	this.button_next:set_images(
-		love.graphics.newImage('images/gui/button-next.png'),
-		love.graphics.newImage('images/gui/button-next.png'),
-		love.graphics.newImage('images/gui/button-next.png')
+		this.img_button_next,
+		this.img_button_next_hover,
+		this.img_button_next
 	)
 	this.group:add_elements(this.button_next)
-
-	this.b_container = {}
-	this.b_container.w = def.SCREEN_WIDTH
-	this.b_container.h = 50
-	this.b_container.x = 0
-	this.b_container.y = def.SCREEN_HEIGHT - this.b_container.h
-	this.b_container.color = {0,0,0}
 end
 
 function this.update(dt)
@@ -77,10 +63,6 @@ function this.update(dt)
 end
 
 function this.draw()
-	love.graphics.setColor(this.b_container.color)
-	love.graphics.rectangle('fill', this.b_container.x, this.b_container.y, this.b_container.w, this.b_container.h)
-	love.graphics.setColor(1,1,1)
-
 	this.group:draw()
 end
 
