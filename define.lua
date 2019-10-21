@@ -22,7 +22,7 @@ function this.create_text(p_string, p_table)
 	text.body = p_string
 	text.margin = 8
 	text.color = util.color.black
-	text.font_size = 25
+	text.font_size = 18
 	text.font = love.graphics.newFont('fonts/font-vera-sans/vera.ttf', text.font_size)
 	text.x = gui.main_textbox.x + text.margin
 	text.y = gui.main_textbox.y + text.margin
@@ -38,38 +38,46 @@ function this.create_text(p_string, p_table)
 	return text
 end
 
-function this.create_screen(p_id, p_img, p_string, p_table)
-	local screen = {}
-	screen.id = p_id
-	screen.img = love.graphics.newImage('images/'..p_img)
-
-	screen.append_object = function(p_id, p_img, p_zone)
-		screen.obj = {}
-		screen.obj.id = p_obj_id
-		screen.obj.img = love.graphics.newImage('images/'..p_img)		
-		screen.obj.zone = p_zone
+function this.create_act(p_id, p_img, p_string, p_table)
+	local act = {}
+	act.id = p_id
+	if p_img ~= nil then 
+		act.bg = love.graphics.newImage('images/'..p_img)
 	end
 
-	screen.append_character = function(p_id, p_img)
-		screen.character = {}
-		screen.character.id = p_id
-		screen.character.img = love.graphics.newImage('images/'..p_img)
+	act.append_object = function(p_id, p_img, p_zone)
+		act.obj = {}
+		act.obj.id = p_obj_id
+		act.obj.img = love.graphics.newImage('images/'..p_img)		
+		act.obj.zone = p_zone
 	end
 
-	screen.draw = function()
-		love.graphics.draw(screen.img)
+	act.append_character = function(p_id, p_img)
+		act.character = {}
+		act.character.id = p_id
+		act.character.img = love.graphics.newImage('images/'..p_img)
+	end
 
-		if screen.obj ~= nil then
-			love.graphics.draw(screen.obj.img)
+	act.draw = function()
+		if act.bg ~= nil then
+			love.graphics.draw(act.bg)
+		else
+			love.graphics.setColor(util.color.black)
+			love.graphics.rectangle('fill', 0, 0, util.SCREEN_WIDTH, util.SCREEN_HEIGHT)
+			love.graphics.setColor(1,1,1)
 		end
 
-		if screen.character ~= nil then
-			love.graphics.draw(screen.character.img)
+		if act.obj ~= nil then
+			love.graphics.draw(act.obj.img)
+		end
+
+		if act.character ~= nil then
+			love.graphics.draw(act.character.img)
 		end
 	end
 
-	table.insert(p_table, screen)
-	return screen
+	table.insert(p_table, act)
+	return act
 end
 
 return this
