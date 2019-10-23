@@ -1,4 +1,4 @@
-local def = require('define')
+local transition = require('transition')
 
 local this = {}
 
@@ -29,6 +29,7 @@ this.hero = {}
 this.hero.img = nil
 this.hero.line = nil
 this.hero.column = nil
+------------------------------------------------------------------------------------------
 
 function this.map.isSea(id)
 	if this.map.tiletypes[id] == 'sea' then
@@ -106,7 +107,7 @@ function this.update(dt)
 
 	this.theme:play()
 
-	def.music_fade(this.theme, dt)
+	transition.music_fade(this.theme, dt)
 
 	local mx = math.floor(love.mouse.getX() / this.map.TILE_WIDTH) + 1
 	local my = math.floor(love.mouse.getY() / this.map.TILE_HEIGHT) + 1
@@ -175,6 +176,9 @@ function this.draw()
 	local x = (this.hero.column - 1) * this.map.TILE_WIDTH
 	local y = (this.hero.line - 1) * this.map.TILE_HEIGHT
 	love.graphics.draw(this.hero.img, x, y)
+end
+
+function this.keypressed(key)
 end
 
 return this
