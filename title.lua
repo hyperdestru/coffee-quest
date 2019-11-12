@@ -17,7 +17,7 @@ end
 function this.keypressed(key)
 	if key == 'space' then
 		this.theme:stop()
-		states.set('overworld')
+		states.set('act_intro')
 	end
 end
 
