@@ -2,10 +2,12 @@ local this = {}
 
 this.title = require('title')
 this.overworld = require('overworld')
+this.act_intro = require('act-intro')
 
 this.stack = {
 	{'title', this.title},
-	{'overworld', this.overworld}
+	{'overworld', this.overworld},
+	{'act_intro', this.act_intro}
 }
 
 this.stack.current = nil
