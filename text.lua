@@ -5,20 +5,19 @@ local this = {}
 
 this.act_intro = {}
 this.act_intro.scene_1 = {
-	'ID'='VOID',
 	"Mmmh, uh, hein ? Quelle heure il est ? Qui suis-je ?",
 	"Est-ce que... Est-ce que j'ai pas un job où je dois aller, ou quelque chose ?",
 	"Mgblr, il me faut un café. Tout ira bien lorsque j'aurai bu mon café."
 }
 
-this.act_intro.scene_2 = {
+--[[this.act_intro.scene_2 = {
 	'ID'='KITCHEN',
 	"Ehhh ? Plus de café. Bon, pas de panique, je vais juste aller en acheter un au café du coin."
 }
 
 this.act_intro.scene_3 = {
 	'ID' = 'COFFEE_SHOP',
-	'CHARACTER_ENTRANCE' = 2
+	'CHARACTER_ENTRANCE' = 2,
 	"Bonjour caffelier, votre meilleur café, dans une grande tasse, pronto ! Espresso !",
 	"\"rmm brrmm grmm\"\nComment ? Plus de café ? Vous plaisantez bien sûr, on me la fait pas, il y a écrit « coffee » derrière vous. Sans café, vous n'êtes rien !",
 	"\"grmmbl brummb drmm\"\nUne pénurie de café ? Toute la ville est touchée ?",
@@ -29,10 +28,10 @@ this.act_intro.scene_3 = {
 
 this.act_intro.scene_4 = {
 	'ID'='LIVING_ROOM',
-	'CHARACTER_ENTRANCE' = 2
+	'CHARACTER_ENTRANCE' = 2,
 	"Palanã ! L'heure est grave ! On est que lundi, et j'en ai déjà plein le dos.",
 	"A qui le dites-vous, la pénurie de café touche le continent entier."
-}
+}]]
 
 return this
 
