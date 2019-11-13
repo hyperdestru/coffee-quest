@@ -56,4 +56,13 @@ function this.keypressed(key)
 	end
 end
 
+function this.mousepressed(x, y, button, istouch)
+	local i = 1
+	for i = 1, #this.stack do
+		if this.get() == this.stack[i][1] and this.stack[i][2].keypressed(key) ~= nil then
+			this.stack[i][2].mousepressed(x, y, button, istouch)
+		end
+	end
+end
+
 return this
