@@ -13,4 +13,7 @@ this.color.blue = {0,0,1}
 this.color.brown = {102/255, 51/255, 0}
 this.color.startrek_blue = {101/255,117/255,166/255}
 
+this.font = {}
+this.font.vera_sans = love.graphics.newFont('fonts/font-vera-sans/Vera.ttf', 20)
+
 return this
