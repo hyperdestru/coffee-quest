@@ -38,6 +38,14 @@ function this.create(p_id, p_img, p_table)
 		if scene.background ~= nil then
 			love.graphics.draw(scene.background)
 		end
+
+		if scene.object ~= nil then
+			love.graphics.draw(scene.object.img)
+		end
+
+		if scene.character ~= nil then
+			love.graphics.draw(scene.character.img)
+		end
 	end
 
 	table.insert(p_table, scene)
