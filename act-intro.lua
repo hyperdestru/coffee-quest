@@ -2,30 +2,31 @@ local scene = require('scene')
 
 local this = {}
 
-this.gui = require('gui')
-
 function this.load()
 	this.t_scenes = {}
 
-	this.gui.load()
+	scene.init('VOID', nil, this.t_scenes)
+	this.t_scenes[1].append_text("This is the void")
 
-	scene.create('VOID', nil, this.t_scenes)
-	scene.create('KITCHEN', 'act-intro/kitchen.png', this.t_scenes)
-	scene.create('COFFEE_SHOP', 'act-intro/coffee-shop.png', this.t_scenes)
-	scene.create('LIVING_ROOM', 'act-intro/living-room.png', this.t_scenes)
+	scene.init('KITCHEN', 'act-intro/kitchen.png', this.t_scenes)
+	this.t_scenes[2].append_text("This is the kitchen")
+
+	scene.init('COFFEE_SHOP', 'act-intro/coffee-shop.png', this.t_scenes)
+	this.t_scenes[3].append_text("This is the shop")
+
+	scene.init('LIVING_ROOM', 'act-intro/living-room.png', this.t_scenes)
+	this.t_scenes[4].append_text("This is the living room")
 
 	this.scene_position = 1
 	this.scene_position_max = #this.t_scenes
 end
 
 function this.update(dt)
-	this.gui.update(dt)
+	this.t_scenes[this.scene_position].update(dt)
 end
 
 function this.draw()
 	this.t_scenes[this.scene_position].draw()
-	
-	this.gui.draw()
 end
 
 function this.keypressed(key)
